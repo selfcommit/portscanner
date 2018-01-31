@@ -13,7 +13,9 @@ setup(
     include_package_data=True,
     install_requires=[
         'requests',
+        'bs4'
     ],
+    # https://docs.pytest.org/en/latest/goodpractices.html
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
     package_data={
@@ -21,6 +23,6 @@ setup(
     },
     entry_points='''
         [console_scripts]
-        ipscanner=IPScanner.scanner:start
+        ipscanner=IPScanner.Scan_Tools:start
     ''',
 )
