@@ -1,4 +1,4 @@
-install: test
+install:
 	sudo -H pip install --user .
 
 clean:
