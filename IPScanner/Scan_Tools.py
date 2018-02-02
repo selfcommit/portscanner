@@ -105,14 +105,14 @@ class Scanner(object):
                     return False
 
 
-def start(ips=None):
+def start():
 
     # https://stackoverflow.com/questions/12151306
     parser = argparse.ArgumentParser(description="Webserver Scanning Tool",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     ip_group = parser.add_mutually_exclusive_group()
     ip_group.add_argument('--ips', nargs='*', help='''ips to be scanned,''' +
-                          '''as comma separated list without protocol(http/s)''')
+                          '''as comma separated list without protocol(http/s)''', default=None)
     ip_group.add_argument('--csv', nargs='?', help='string of path to local CSV file of ips to be scanned')
 
     server_group = parser.add_mutually_exclusive_group()
@@ -124,7 +124,6 @@ def start(ips=None):
     parser.add_argument('--verbose', action='store_true', help='Verbose output for debugging')
 
     args = parser.parse_args()
-    ips = args.ips
 
     if args.csv:  # overides --ips
         with open(args.csv, 'r') as csvfile:
@@ -136,7 +135,7 @@ def start(ips=None):
     if len(sys.argv) == 1:
         parser.print_help()
 
-    if ips is None and args.ips is None:
+    if args.ips is None:
         exit()  # prevents build results without provided ips during testing
 
     s = Scanner(args=args)
@@ -148,6 +147,7 @@ def start(ips=None):
     else:
         for result in results:
             print("URL: %s ServerType: %s Listable: %s" % (result['url'], result['server'], result['listable']))
+
 
 if __name__ == "__main__":
     start()
