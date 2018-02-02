@@ -31,9 +31,10 @@ Expected Result:
 ```
 URL: http://159.89.34.233 ServerType: nginx/1.10.3 (Ubuntu) Listable: False
 URL: http://159.89.34.233/list/ ServerType: nginx/1.10.3 (Ubuntu) Listable: True
-URL: http://159.89.34.233/nolist/ ServerType: nginx/1.10.3 (Ubuntu) Listable: False```
+URL: http://159.89.34.233/nolist/ ServerType: nginx/1.10.3 (Ubuntu) Listable: False
+```
 
-### Flags
+## Flags
 
 ```  -h, --help            show this help message and exit
   --ips [IPS [IPS ...]]
