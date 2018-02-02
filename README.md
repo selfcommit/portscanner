@@ -41,7 +41,7 @@ Expected Result:
 ```
 
 
-# Testing
+## Testing
 Tests are run using pytest.
 
 All test files are located in the ```tests``` directory and must begin with test_
@@ -49,7 +49,7 @@ All test files are located in the ```tests``` directory and must begin with test
 All tests must pass before install.
 
 
-# Notes:
+## Notes:
  - Alternative to checking Headers: https://www.netcraft.com/
  - wget spider https://superuser.com/questions/642555/
  - List directory contents with bs4 https://stackoverflow.com/questions/11023530
