@@ -1,5 +1,5 @@
 install: test
-	pip3 install --user .
+	pip install --user .
 
 clean:
 	rm -rf .cache
@@ -13,4 +13,4 @@ test:
 	python setup.py test
 
 uninstall: clean
-	pip3 uninstall IPScanner -y
+	pip uninstall IPScanner -y
