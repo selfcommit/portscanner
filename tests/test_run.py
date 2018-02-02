@@ -8,3 +8,8 @@ def test_scanner():
 def test_start():
 
     return True
+
+
+def test_listable():
+
+    return True

@@ -25,19 +25,27 @@ For other make targets see makefile
 ## Usage
 
 Example:
-```ipscanner --ips 159.89.34.233, google.com --all --json```
+```ipscanner --servers nginx --csv ip_example_file.txt```
 
 Expected Result:
-```[{"url": "http://159.89.34.233,", "listable": null}, {"url": "https://159.89.34.233,", "listable": null}, {"url": "http://google.com", "listable": false}, {"url": "https://google.com", "listable": false}]```
+```
+URL: http://159.89.34.233 ServerType: nginx/1.10.3 (Ubuntu) Listable: False
+URL: http://159.89.34.233/list/ ServerType: nginx/1.10.3 (Ubuntu) Listable: True
+URL: http://159.89.34.233/nolist/ ServerType: nginx/1.10.3 (Ubuntu) Listable: False```
 
 ### Flags
 ```  -h, --help            show this help message and exit
   --ips [IPS [IPS ...]]
                         ips to be scanned,as comma separated list without
-                        protocol(http/s)
-  --json                Output results as Json
-  --all                 Show results for all server types
-  --verbose             Verbose output for debugging
+                        protocol(http/s) (default: None)
+  --json                Output results as Json (default: False)
+  --all                 Show results for all server types. Overides --servers
+                        (default: False)
+  --verbose             Verbose output for debugging (default: False)
+  --servers [SERVERS [SERVERS ...]]
+                        Define Server types in comma separated list Ex:
+                        --servers nginx, nginx/1, IIS (default: ['nginx/1.2',
+                        'IIS/7.0'])
 ```
 
 

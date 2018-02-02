@@ -1,15 +1,14 @@
 import sys
-import argparse
 import json
+import argparse
 # https://docs.python.org/3/library/argparse.html
 import requests
 # http://docs.python-requests.org/en/latest/user/quickstart/#redirection-and-history
 from bs4 import BeautifulSoup
-# https://github.com/riramar/hsecscan/blob/master/hsecscan.py
 
 
 class Scanner(object):
-    """Scanner class - accepts dict of args"""
+    """Scanner class - optionally accepts argsparse object"""
     def __init__(self, args=None):
         super(Scanner, self).__init__()
         if args is not None:
@@ -19,17 +18,19 @@ class Scanner(object):
             self.verbose = args.verbose
             self.json = args.json
             self.all = args.all
+            self.server_types = args.servers
         else:
             self.verbose = False
             self.json = False
             self.all = False
+            self.server_types = ['nginx/1.2', 'IIS/7.0']
 
         if self.verbose:
             print(args)
 
     def build_results(self, ips=None):
         results = []
-        server_types = ['nginx', 'IIS']
+        server_types = self.server_types
         if ips is None:
             ips = self.args.ips
         protocols = ['http://', 'https://']
@@ -58,26 +59,31 @@ class Scanner(object):
     def scan_url(self, url):
         try:
             response = requests.get(url, allow_redirects=True, timeout=2.5)
-            # print(response.headers)
+            if self.verbose:
+                print(response.headers)
+
             response.raise_for_status()
 
             return response, None
 
-    # https://stackoverflow.com/questions/6095717
-    #   except requests.exceptions.Timeout:
-    #    print("Timout")
-        except requests.ConnectionError as err:
-            print("A Connection Error occured for " + err.request.url)
+        except requests.exceptions.Timeout as err:
             if self.verbose:
+                print("Connection Attempt Timed out for " + err.request.url)
+            return None, err
+
+        except requests.ConnectionError as err:
+            if self.verbose:
+                print("A Connection Error occured for " + err.request.url)
                 print(err)
 
             return None, err
         except requests.exceptions.HTTPError as err:
-            print("A HTTP Error occured for " + err.request.url)
             if self.verbose:
+                print("A HTTP Error occured for " + err.request.url)
                 print(err)
 
             return None, err
+
         except Exception as err:
             print("A General Error has occured:")
             raise(err)
@@ -85,7 +91,8 @@ class Scanner(object):
     def is_listable(self, url):
         # Tests URL title for the word "Index"
         # TODO: Test with other methods, wget --spider?
-        print('checking ' + url)
+        if self.verbose:
+            print('checking ' + url)
         response, error = self.scan_url(url)
         if response:
             if self.verbose is True:
@@ -98,28 +105,43 @@ class Scanner(object):
                     return False
 
 
-def start(args=None):
+def start(ips=None):
 
-    print("Welcome to IP scanner 3")
-    parser = argparse.ArgumentParser(description="Webserver Scanning Tool")
-    parser.add_argument('--ips', nargs='*', help='''ips to be scanned,''' +
-                        '''as comma separated list without protocol(http/s)''')
+    # https://stackoverflow.com/questions/12151306
+    parser = argparse.ArgumentParser(description="Webserver Scanning Tool",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    ip_group = parser.add_mutually_exclusive_group()
+    ip_group.add_argument('--ips', nargs='*', help='''ips to be scanned,''' +
+                          '''as comma separated list without protocol(http/s)''')
+    ip_group.add_argument('--csv', nargs='?', help='string of path to local CSV file of ips to be scanned')
+
+    server_group = parser.add_mutually_exclusive_group()
+    server_group.add_argument('--servers', nargs='*', default=['nginx/1.2', 'IIS/7.0'],
+                              help='Define Server types in comma separated list ' + 'Ex: --servers nginx, nginx/1, IIS')
+    server_group.add_argument('--all', action='store_true', help='Show results for all server types.')
+
     parser.add_argument('--json', action='store_true', help='Output results as Json')
-    parser.add_argument('--all', action='store_true', help='Show results for all server types')
     parser.add_argument('--verbose', action='store_true', help='Verbose output for debugging')
 
     args = parser.parse_args()
+    ips = args.ips
+
+    if args.csv:  # overides --ips
+        with open(args.csv, 'r') as csvfile:
+            data = csvfile.read()
+
+        args.ips = data.split(',')
+
     # https://stackoverflow.com/questions/4042452/
     if len(sys.argv) == 1:
         parser.print_help()
-    if args.ips is None:
-        args.ips = ['159.89.34.233', '159.89.34.233/list/', '159.89.34.233/nolist/',
-                    'www.ebay.com', 'www.htps.us', 'helpdesk.htps.us',
-                    'stackoverflow.com', 'less.fail', '217.70.184.38']
+
+    if ips is None and args.ips is None:
+        exit()  # prevents build results without provided ips during testing
+
     s = Scanner(args=args)
     results = s.build_results()
 
-    # results = dict((key, value) for key, value in results if 'IIS' in value)
     if args.json:
         results = json.dumps(results)
         print(results)
