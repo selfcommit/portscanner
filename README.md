@@ -8,7 +8,7 @@ ipscanner is written as a tool to provide a best guess about webservers based on
 
 ipscanner is written for python3, but may work with some versions of python2.
 
-# Install
+## Install
 ipscanner is written for OSX and linux enviornments running python.
 
 To install, unzip the package and run 
@@ -22,7 +22,7 @@ To clean build folders
 
 For other make targets see makefile
 
-# Usage
+## Usage
 
 Example:
 ```ipscanner --ips 159.89.34.233, google.com --all --json```
@@ -30,7 +30,7 @@ Example:
 Expected Result:
 ```[{"url": "http://159.89.34.233,", "listable": null}, {"url": "https://159.89.34.233,", "listable": null}, {"url": "http://google.com", "listable": false}, {"url": "https://google.com", "listable": false}]```
 
-## Flags
+### Flags
 ```  -h, --help            show this help message and exit
   --ips [IPS [IPS ...]]
                         ips to be scanned,as comma separated list without
