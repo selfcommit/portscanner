@@ -43,14 +43,13 @@ Expected Result:
 
 # Testing
 Tests are run using pytest.
-All files located in the tests directory, and beginning with test_ will be run (and must pass) during install.
+
+All test files are located in the ```tests``` directory and must begin with test_
+
+All tests must pass before install.
 
 
-Limitations
-
-#Notes:
-### Alternative to checking Headers: https://www.netcraft.com/
-
-### wget spider https://superuser.com/questions/642555/
-
-### List directory contents with bs4 https://stackoverflow.com/questions/11023530
+# Notes:
+ - Alternative to checking Headers: https://www.netcraft.com/
+ - wget spider https://superuser.com/questions/642555/
+ - List directory contents with bs4 https://stackoverflow.com/questions/11023530
