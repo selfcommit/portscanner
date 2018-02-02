@@ -48,9 +48,9 @@ All files located in the tests directory, and beginning with test_ will be run (
 
 Limitations
 
-Notes:
-# Alternative to checking Headers: https://www.netcraft.com/
+#Notes:
+### Alternative to checking Headers: https://www.netcraft.com/
 
-# wget spider https://superuser.com/questions/642555/
+### wget spider https://superuser.com/questions/642555/
 
-# List directory contents with bs4 https://stackoverflow.com/questions/11023530
+### List directory contents with bs4 https://stackoverflow.com/questions/11023530
