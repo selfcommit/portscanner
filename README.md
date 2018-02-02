@@ -41,13 +41,11 @@ URL: http://159.89.34.233/nolist/ ServerType: nginx/1.10.3 (Ubuntu) Listable: Fa
                         ips to be scanned,as comma separated list without
                         protocol(http/s) (default: None)
   --json                Output results as Json (default: False)
-  --all                 Show results for all server types. Overides --servers
-                        (default: False)
+  --all                 Show results for all server types. (default: False)
   --verbose             Verbose output for debugging (default: False)
   --servers [SERVERS [SERVERS ...]]
-                        Define Server types in comma separated list Ex:
-                        --servers nginx, nginx/1, IIS (default: ['nginx/1.2',
-                        'IIS/7.0'])
+                        Define Server types in comma separated list
+                        Ex:--servers nginx, nginx/1, IIS (default: ['nginx/1.2','IIS/7.0'])
 ```
 
 
