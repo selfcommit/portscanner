@@ -7,7 +7,7 @@ clean:
 	rm -rf IPScanner.egg-info
 
 dev:
-	pip3 install --user .
+	pip install --user .
 
 test:
 	python setup.py test
