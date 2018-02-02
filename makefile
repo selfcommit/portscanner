@@ -1,5 +1,5 @@
 install: test
-	pip install --user .
+	sudo -H pip install --user .
 
 clean:
 	rm -rf .cache
@@ -13,4 +13,4 @@ test:
 	python setup.py test
 
 uninstall: clean
-	pip uninstall IPScanner -y
+	sudo -H pip uninstall IPScanner -y
