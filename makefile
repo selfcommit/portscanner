@@ -1,5 +1,5 @@
 install:
-	sudo -H pip install --user .
+	sudo -H pip install .
 
 clean:
 	rm -rf .cache
