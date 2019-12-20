@@ -58,6 +58,8 @@ All tests must pass before install.
 
 
 ## Notes:
+ - Regarding using sudo for install: 
+    sudo for install of python projects is less than ideal.  A better alternative would be building the project inside a virtual enviornment or container such as docker.
  - Alternative to checking Headers: https://www.netcraft.com/
  - wget spider https://superuser.com/questions/642555/
  - List directory contents with bs4 https://stackoverflow.com/questions/11023530
